@@ -27,9 +27,10 @@ Hyprfetch is a lightweight and customizable system information fetch tool, simil
 To compile Hyprfetch, ensure you have a C++ compiler installed (e.g., `g++`) and run:
 
 ```sh
- git clone https://github.com/luvth/hyprfetch
+git clone https://github.com/luvth/hyprfetch
 cd hyprfetch
 chmod +x install.sh
+cd
 ```
 
 Then, run the executable:
