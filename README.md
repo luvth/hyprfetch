@@ -1,0 +1,2 @@
+# hyprfetch
+Just... perfection
