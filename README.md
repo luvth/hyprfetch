@@ -30,7 +30,6 @@ To compile Hyprfetch, ensure you have a C++ compiler installed (e.g., `g++`) and
 git clone https://github.com/luvth/hyprfetch
 cd hyprfetch
 chmod +x install.sh
-cd
 ```
 
 Then, run the executable:
