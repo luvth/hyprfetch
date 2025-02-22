@@ -17,28 +17,33 @@ const std::string CWH = "\033[37m";
 const std::string CBD = "\033[1m";
 const std::string CNC = "\033[0m";
 
-std::string execCmd(const char *cmd) {
+std::string execCmd(const char *cmd)
+{
   std::array<char, 128> buffer;
   std::string result;
   std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
   if (!pipe)
     return "";
-  while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+  while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
+  {
     result += buffer.data();
   }
-  if (!result.empty() && result[result.length() - 1] == '\n') {
+  if (!result.empty() && result[result.length() - 1] == '\n')
+  {
     result.erase(result.length() - 1);
   }
   return result;
 }
 
-std::string draw(int perc, int size) {
+std::string draw(int perc, int size)
+{
   std::string FULL = "━";
   std::string EMPTY = "━";
   std::string out;
   int inc = perc * size / 100;
 
-  for (int v = 0; v < size; v++) {
+  for (int v = 0; v < size; v++)
+  {
     if (v <= inc)
       out += CMA + FULL;
     else
@@ -47,16 +52,19 @@ std::string draw(int perc, int size) {
   return out;
 }
 
-std::string getColorBar() {
+std::string getColorBar()
+{
   std::string c = "\033[0m\033[31m░▒";
-  for (int i = 1; i <= 6; i++) {
+  for (int i = 1; i <= 6; i++)
+  {
     c += "\033[" + std::to_string(i + 41) + "m\033[" + std::to_string(i + 30) +
          "m█▓▒░";
   }
   return c + "\033[37m█\033[0m▒░";
 }
 
-int main() {
+int main()
+{
   std::string name = getenv("USER");
   struct utsname uts;
   uname(&uts);
@@ -64,7 +72,33 @@ int main() {
 
   std::string distro =
       execCmd("awk -F '\"' '/PRETTY_NAME/ { print $2 }' /etc/os-release");
-  std::string packages = execCmd("pacman -Q | wc -l");
+
+  std::string packages;
+  if (distro.find("Arch") != std::string::npos)
+  {
+    packages = execCmd("pacman -Q | wc -l");
+  }
+  else if (distro.find("Debian") != std::string::npos || distro.find("Ubuntu") != std::string::npos)
+  {
+    packages = execCmd("dpkg -l | wc -l");
+  }
+  else if (distro.find("Fedora") != std::string::npos)
+  {
+    packages = execCmd("rpm -qa | wc -l");
+  }
+  else if (distro.find("Gentoo") != std::string::npos)
+  {
+    packages = execCmd("eix -I | wc -l");
+  }
+  else if (distro.find("openSUSE") != std::string::npos)
+  {
+    packages = execCmd("zypper se --installed-only | wc -l");
+  }
+  else
+  {
+    packages = "N/A";
+  }
+
   std::string wm =
       execCmd("xprop -id $(xprop -root -notype | awk "
               "'$1==\"_NET_SUPPORTING_WM_CHECK:\"{print $5}') -notype -f "
