@@ -1,6 +1,6 @@
 # Hyprfetch
 
-![Hyprfetch exemple](https://i.imgur.com/KmUAMg8.png)
+![Hyprfetch example](https://i.imgur.com/KmUAMg8.png)
 
 Hyprfetch is a lightweight and customizable system information fetch tool, similar to Neofetch, designed for minimalism and efficiency. It displays essential system details in a visually appealing way, with color-coded information and a dynamic progress bar for system resource usage.
 
@@ -56,4 +56,3 @@ You can modify the C++ source code to:
 ## Contributions
 
 Feel free to fork the repository and submit pull requests for improvements!
-
