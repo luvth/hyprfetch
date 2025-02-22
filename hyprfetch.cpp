@@ -64,7 +64,11 @@ int main() {
 
   std::string distro =
       execCmd("awk -F '\"' '/PRETTY_NAME/ { print $2 }' /etc/os-release");
-  std::string packages = execCmd("pacman -Q | wc -l");
+  std::string packages;
+  if (distro == "Gentoo Linux")
+      packages = execCmd("ls /var/db/pkg/* | wc -l");
+  else
+      packages = execCmd("pacman -Q | wc -l");
   std::string wm =
       execCmd("xprop -id $(xprop -root -notype | awk "
               "'$1==\"_NET_SUPPORTING_WM_CHECK:\"{print $5}') -notype -f "
