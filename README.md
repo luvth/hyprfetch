@@ -1,6 +1,6 @@
 # Hyprfetch
 
-![Hyprfetch exemple](https://i.imgur.com/KmUAMg8.png)
+![Hyprfetch example](https://i.imgur.com/KmUAMg8.png)
 
 Hyprfetch is a lightweight and customizable system information fetch tool, similar to Neofetch, designed for minimalism and efficiency. It displays essential system details in a visually appealing way, with color-coded information and a dynamic progress bar for system resource usage.
 
@@ -46,6 +46,36 @@ Simply execute Hyprfetch in the terminal:
 hyprfetch
 ```
 
+## Building with Makefile
+
+Hyprfetch includes a Makefile to simplify the build process:
+
+```sh
+# Build Hyprfetch
+make
+
+# Run locally
+make run
+
+# Install system-wide
+sudo make install
+
+# Clean build files
+make clean
+
+# Uninstall
+sudo make uninstall
+```
+
+The Makefile provides the following targets:
+- `make` - Compiles the program
+- `make run` - Builds and executes Hyprfetch
+- `make clean` - Removes object files and executable
+- `make install` - Installs Hyprfetch to /usr/local/bin
+- `make uninstall` - Removes Hyprfetch from the system
+
+This build system uses g++ with C++11 standard and includes warning flags to ensure code quality.
+
 ## Customization
 
 You can modify the C++ source code to:
@@ -56,4 +86,3 @@ You can modify the C++ source code to:
 ## Contributions
 
 Feel free to fork the repository and submit pull requests for improvements!
-

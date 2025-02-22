@@ -64,7 +64,23 @@ int main() {
 
   std::string distro =
       execCmd("awk -F '\"' '/PRETTY_NAME/ { print $2 }' /etc/os-release");
-  std::string packages = execCmd("pacman -Q | wc -l");
+
+  std::string packages;
+
+  if (distro.find("Arch") != std::string::npos) {
+    packages = execCmd("pacman -Q | wc -l");
+  } else if (distro.find("Debian") != std::string::npos || distro.find("Ubuntu") != std::string::npos) {
+    packages = execCmd("dpkg -l | wc -l");
+  } else if (distro.find("Fedora") != std::string::npos) {
+    packages = execCmd("rpm -qa | wc -l");
+  } else if (distro.find("Gentoo") != std::string::npos) {
+    packages = execCmd("ls /var/db/pkg/* | wc -l");
+  } else if (distro.find("openSUSE") != std::string::npos) {
+    packages = execCmd("zypper se --installed-only | wc -l");
+  } else {
+    packages = "N/A";
+  }
+
   std::string wm =
       execCmd("xprop -id $(xprop -root -notype | awk "
               "'$1==\"_NET_SUPPORTING_WM_CHECK:\"{print $5}') -notype -f "
